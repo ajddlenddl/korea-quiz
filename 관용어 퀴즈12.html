@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>관용어 퀴즈</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+
+    .quiz-container {
+      max-width: 800px;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      margin: 40px auto;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    .question {
+      margin-bottom: 25px;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #fafafa;
+    }
+
+    .question p {
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #222;
+    }
+
+    label {
+      display: block;
+      margin: 8px 0;
+      padding: 10px;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+      border: 1px solid transparent;
+      cursor: pointer;
+    }
+
+    input[type="radio"] {
+      margin-right: 8px;
+    }
+
+    .correct {
+      background-color: #4CAF50;
+      color: white;
+      border: 1px solid #3e8e41;
+      position: relative;
+    }
+
+    .correct::after {
+      content: "✔ 정답";
+      position: absolute;
+      right: 15px;
+      font-size: 14px;
+    }
+
+    .incorrect {
+      background-color: #f44336;
+      color: white;
+      border: 1px solid #d32f2f;
+      position: relative;
+    }
+
+    .incorrect::after {
+      content: "✖ 오답";
+      position: absolute;
+      right: 15px;
+      font-size: 14px;
+    }
+
+    .explanation {
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #e0e0e0;
+      border-radius: 5px;
+      font-size: 14px;
+      color: #333;
+    }
+
+    @media (max-width: 600px) {
+      .quiz-container {
+        padding: 15px;
+      }
+
+      label {
+        font-size: 15px;
+      }
+
+      .explanation {
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="quiz-container">
+  <h1>관용어 퀴즈</h1>
+  <form id="quizForm"></form>
+</div>
+
+<script>
+  const questions = [
+    {
+      question: "“발이 넓다”의 의미는?",
+      options: ["발이 크다", "인맥이 많다", "잘 달린다", "길을 잘 안다"],
+      answer: 1,
+      explanation: "‘발이 넓다’는 다양한 사람들과 폭넓은 관계를 가지고 있다는 뜻입니다."
+    },
+    {
+      question: "“입이 무겁다”는?",
+      options: ["말이 많다", "음식을 잘 먹는다", "비밀을 잘 지킨다", "말을 천천히 한다"],
+      answer: 2,
+      explanation: "‘입이 무겁다’는 말하지 않고 비밀을 잘 지킨다는 의미입니다."
+    },
+    {
+      question: "“눈에 불을 켜다”는?",
+      options: ["화가 나다", "열심히 찾다", "눈이 아프다", "눈이 크다"],
+      answer: 1,
+      explanation: "무언가를 찾거나 하려고 매우 집중하고 열심히 하는 것을 뜻합니다."
+    },
+    {
+      question: "“손을 놓다”는?",
+      options: ["일을 그만두다", "손이 아프다", "쉬다", "손을 씻다"],
+      answer: 0,
+      explanation: "일을 중단하거나 포기하는 것을 뜻합니다."
+    },
+    {
+      question: "“귀가 얇다”는?",
+      options: ["잘 안 들린다", "쉽게 믿는다", "귀가 작다", "조용히 듣는다"],
+      answer: 1,
+      explanation: "다른 사람 말에 쉽게 영향을 받는 사람을 가리킵니다."
+    },
+    {
+      question: "“가슴이 철렁하다”는?",
+      options: ["놀라다", "아프다", "기쁘다", "두근거리다"],
+      answer: 0,
+      explanation: "갑작스럽게 놀라거나 당황할 때 쓰는 표현입니다."
+    },
+    {
+      question: "“손발이 맞다”는?",
+      options: ["키가 같다", "마음이 통한다", "협력이 잘 된다", "춤을 잘 춘다"],
+      answer: 2,
+      explanation: "서로 호흡이 잘 맞고 협력이 잘 되는 것을 말합니다."
+    },
+    {
+      question: "“허리를 굽히다”는?",
+      options: ["몸이 아프다", "공손히 인사하다", "자세가 안 좋다", "기지개를 켜다"],
+      answer: 1,
+      explanation: "공손하게 인사하거나 겸손한 태도를 보일 때 쓰는 말입니다."
+    },
+    {
+      question: "“눈살을 찌푸리다”는?",
+      options: ["햇빛이 눈부시다", "기분이 나쁘다", "졸리다", "집중하다"],
+      answer: 1,
+      explanation: "기분이 좋지 않거나 불쾌할 때 얼굴을 찌푸리는 것을 의미합니다."
+    },
+    {
+      question: "“낯이 익다”는?",
+      options: ["처음 본다", "낯설다", "어딘가 본 적 있다", "얼굴이 예쁘다"],
+      answer: 2,
+      explanation: "예전에 본 적이 있어 친숙하게 느껴지는 얼굴이라는 뜻입니다."
+    }
+  ];
+
+  function shuffleArray(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+  }
+
+  shuffleArray(questions);
+
+  const quizForm = document.getElementById("quizForm");
+
+  questions.forEach((q, index) => {
+    const qDiv = document.createElement("div");
+    qDiv.className = "question";
+    qDiv.innerHTML = `<p>${index + 1}. ${q.question}</p>`;
+
+    q.options.forEach((opt, i) => {
+      const optionId = `q${index}_opt${i}`;
+      const label = document.createElement("label");
+      label.innerHTML = `
+        <input type="radio" name="q${index}" value="${i}" id="${optionId}">
+        ${opt}
+      `;
+      label.querySelector("input").addEventListener("change", () => handleAnswer(index, i));
+      qDiv.appendChild(label);
+    });
+
+    const exp = document.createElement("div");
+    exp.className = "explanation";
+    exp.id = `explain${index}`;
+    exp.style.display = "none";
+    qDiv.appendChild(exp);
+
+    quizForm.appendChild(qDiv);
+  });
+
+  function handleAnswer(qIndex, selectedIndex) {
+    const correctIndex = questions[qIndex].answer;
+    const allOptions = document.getElementsByName(`q${qIndex}`);
+    const explanationDiv = document.getElementById(`explain${qIndex}`);
+
+    allOptions.forEach(input => {
+      input.parentElement.classList.remove("correct", "incorrect");
+      input.disabled = true;
+    });
+
+    if (selectedIndex === correctIndex) {
+      allOptions[selectedIndex].parentElement.classList.add("correct");
+    } else {
+      allOptions[selectedIndex].parentElement.classList.add("incorrect");
+      allOptions[correctIndex].parentElement.classList.add("correct");
+    }
+
+    explanationDiv.style.display = "block";
+    explanationDiv.textContent = "해설: " + questions[qIndex].explanation;
+  }
+</script>
+
+</body>
+</html>
